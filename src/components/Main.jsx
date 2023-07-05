@@ -47,13 +47,11 @@ function Main() {
             if (index !== -1) {
                 indexDate = index
                 idDate = item.id
-           
 
                 dispatch(setNameFilm(item.name))
-                dispatch(setDateFilm(date))     
+                dispatch(setDateFilm(date))
                 dispatch(setTimeFilm(item.time[indexDate]))
-                
-                
+
                 localStorage.setItem(
                     "filmLocal",
                     JSON.stringify([item.name, date, item.time[indexDate]])
@@ -62,31 +60,34 @@ function Main() {
         })
 
         dispatch(setIndexOfDate(indexDate))
-        dispatch(setIdOfDate(idDate))
-      
     }
-
 
     // const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
     // console.log(filmLocal)
 
     return (
-        <>
-            <div className={styles.container}>
-                {data.map((item) => (
-                    <div className={styles.item} key={item.id}>
+        <div className={styles.container}>
+            {data.map((item) => (
+                <div className={styles.item} key={item.id}>
+                    <img src={item.img}></img>
+                    
+                    <div className={styles.secondPart}>
                         <h2>{item.name}</h2>
                         {item.dates.map((el, index) => (
-                            <Link to="film" key={index}>
-                                <button onClick={(event) => clickOnDate(event)}>
-                                    {el}
-                                </button>
-                            </Link>
+                            <div className={styles.containerBtn}>
+                                <Link to="film" key={index}>
+                                    <button
+                                        onClick={(event) => clickOnDate(event)}
+                                    >
+                                        {el}
+                                    </button>
+                                </Link>
+                            </div>
                         ))}
                     </div>
-                ))}
-            </div>
-        </>
+                </div>
+            ))}
+        </div>
     )
 }
 
