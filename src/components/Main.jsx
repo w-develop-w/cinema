@@ -54,7 +54,7 @@ function Main() {
 
                 localStorage.setItem(
                     "filmLocal",
-                    JSON.stringify([item.name, date, item.time[indexDate]])
+                    JSON.stringify([item.name, date, item.time[indexDate], item.img])
                 )
             }
         })

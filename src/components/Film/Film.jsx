@@ -25,25 +25,32 @@ function Film() {
     }
 
     const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
-  
 
     return (
-        <>
-            <h1>heheh</h1>
-            <h2>{filmLocal[0]}</h2>
-            <h3>{filmLocal[1]}</h3>
-            {filmLocal[2].map((item, index) => (
-                <Link to="choicePlaces" key={index}>
-                    <button
-                        onClick={() => {
-                            clickOnTime(item)
-                        }}
-                    >
-                        {item}
-                    </button>
-                </Link>
-            ))}
-        </>
+        <div className={styles.container}>
+            <div className={styles.item}>
+                <img src={filmLocal[3]}></img>
+            </div>
+
+            <div className={`${styles.item} ${styles.secondItem}`}>
+                <h2>{filmLocal[0]}</h2>
+                <h3>{filmLocal[1]}</h3>
+
+                <div className={styles.containerBtn}>
+                    {filmLocal[2].map((item, index) => (
+                        <Link to="choicePlaces" key={index}>
+                            <button
+                                onClick={() => {
+                                    clickOnTime(item)
+                                }}
+                            >
+                                {item}
+                            </button>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </div>
     )
 }
 
