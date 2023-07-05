@@ -33,9 +33,9 @@ function Main() {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        console.log(data)
-    }, [data])
+    // useEffect(() => {
+    //     console.log(data)
+    // }, [data])
 
     const clickOnDate = (event) => {
         const date = event.target.textContent
@@ -47,18 +47,28 @@ function Main() {
             if (index !== -1) {
                 indexDate = index
                 idDate = item.id
-                // console.log(item.name)
+           
 
                 dispatch(setNameFilm(item.name))
-                dispatch(setDateFilm(date))
-                // console.log(item.time[indexDate])
+                dispatch(setDateFilm(date))     
                 dispatch(setTimeFilm(item.time[indexDate]))
+                
+                
+                localStorage.setItem(
+                    "filmLocal",
+                    JSON.stringify([item.name, date, item.time[indexDate]])
+                )
             }
         })
 
         dispatch(setIndexOfDate(indexDate))
         dispatch(setIdOfDate(idDate))
+      
     }
+
+
+    // const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
+    // console.log(filmLocal)
 
     return (
         <>

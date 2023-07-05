@@ -5,10 +5,12 @@ import styles from "./Places.module.scss"
 function Places() {
     const dispatch = useDispatch()
     const data = useSelector((state) => state.dataOfFilms)
-    const keys = Object.keys(data.placesFilm)
-    const values = Object.values(data.placesFilm)
 
-    console.log(data.placesFilm)
+    const placesLocal = JSON.parse(localStorage.getItem("placesLocal"))
+    console.log(placesLocal)
+
+    const keys = Object.keys(placesLocal)
+    const values = Object.values(data.placesFilm)
 
     const clickOnPlace = (index) => {
         if (values[index] === true) {
@@ -21,10 +23,11 @@ function Places() {
                 return obj
             }, {})
 
-            // console.log(result)
-
-            // assign result to placesFilm
-            dispatch(setPlacesFilm(result))
+            // assign result to placesLOcal
+            localStorage.setItem("placesLocal", JSON.stringify(result))
+            dispatch(
+                setPlacesFilm(JSON.parse(localStorage.getItem("placesLocal")))
+            )
         } else {
             // change true on false
             values[index] = true
@@ -35,10 +38,10 @@ function Places() {
                 return obj
             }, {})
 
-            // console.log(result)
-
-            // assign result to placesFilm
-            dispatch(setPlacesFilm(result))
+            localStorage.setItem("placesLocal", JSON.stringify(result))
+            dispatch(
+                setPlacesFilm(JSON.parse(localStorage.getItem("placesLocal")))
+            )
         }
     }
 
@@ -55,8 +58,6 @@ function Places() {
                     {item}
                 </button>
             ))}
-
-            {/* {values.map(item => <h3>{it em}</h3>)} */}
         </div>
     )
 }

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import { setIndexTimeFilm, setPlacesFilm } from "../../store/dataSlices"
 import styles from "./Film.module.scss"
-import { Link } from "react-router-dom"
+import { Link, json } from "react-router-dom"
+import { useEffect } from "react"
 
 function Film() {
     const data = useSelector((state) => state.dataOfFilms)
@@ -9,24 +10,29 @@ function Film() {
 
     const clickOnTime = (item) => {
         const indexTime = data.timeFilm.indexOf(item)
-        // console.log(indexTime)
-        // dispatch(setIndexTimeFilm(indexTime))
 
         data.data.map((item) => {
             if (item.name === data.nameFilm) {
-                // console.log(item.places[data.indexOfDate][indexTime])
                 dispatch(
                     setPlacesFilm(item.places[data.indexOfDate][indexTime])
+                )
+                localStorage.setItem(
+                    "placesLocal",
+                    JSON.stringify(item.places[data.indexOfDate][indexTime])
                 )
             }
         })
     }
 
+    const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
+  
+
     return (
         <>
-            <h2>{data.nameFilm}</h2>
-            <h3>{data.dateFilm}</h3>
-            {data.timeFilm.map((item, index) => (
+            <h1>heheh</h1>
+            <h2>{filmLocal[0]}</h2>
+            <h3>{filmLocal[1]}</h3>
+            {filmLocal[2].map((item, index) => (
                 <Link to="choicePlaces" key={index}>
                     <button
                         onClick={() => {

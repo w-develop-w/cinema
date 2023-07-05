@@ -7,7 +7,7 @@ const dataOfFilmsSlice = createSlice({
         nameFilm: '',
         dateFilm: '',
         timeFilm: [],
-        placesFilm: [],
+        placesFilm: JSON.parse(localStorage.getItem("placesLocal")) || [],
         indexTimeFilm: -1,
         indexOfDate: -1,
         idOfDate: 0,
