@@ -54,7 +54,21 @@ function Main() {
 
                 localStorage.setItem(
                     "filmLocal",
-                    JSON.stringify([item.name, date, item.time[indexDate], item.img])
+                    // устанавливаю инфу о фильме
+                    // название --- дату --- доступное время --- картинку
+                    // вот  почему использую  indexDate в item.time[indexDate] ---  
+                    // "dates": ["04.07.2023", "05.07.2023"],
+                    // "time": [
+                    //     ["13:00", "16:00", "19:00"],
+                    //     ["12:00", "15:00", "18:00"]
+                    // ]
+                    
+                    JSON.stringify([
+                        item.name,
+                        date,
+                        item.time[indexDate],
+                        item.img,
+                    ])
                 )
             }
         })
@@ -70,7 +84,7 @@ function Main() {
             {data.map((item) => (
                 <div className={styles.item} key={item.id}>
                     <img src={item.img}></img>
-                    
+
                     <div className={styles.secondPart}>
                         <h2>{item.name}</h2>
                         {item.dates.map((el, index) => (

@@ -8,20 +8,24 @@ function Film() {
     const data = useSelector((state) => state.dataOfFilms)
     const dispatch = useDispatch()
 
+
     const clickOnTime = (item) => {
         const indexTime = data.timeFilm.indexOf(item)
 
-        data.data.map((item) => {
-            if (item.name === data.nameFilm) {
-                dispatch(
-                    setPlacesFilm(item.places[data.indexOfDate][indexTime])
-                )
-                localStorage.setItem(
-                    "placesLocal",
-                    JSON.stringify(item.places[data.indexOfDate][indexTime])
-                )
-            }
-        })
+        const filmPlacesLocal = JSON.parse(localStorage.getItem("placesLocal"))
+        const placesToUpdate = item.places[data.indexOfDate][indexTime]
+
+        if (filmPlacesLocal || filmPlacesLocal !== placesToUpdate) {
+            dispatch(setPlacesFilm(filmPlacesLocal))
+            //   localStorage.setItem("placesLocal", JSON.stringify(placesToUpdate));
+        } else {
+            dispatch(setPlacesFilm(item.places[data.indexOfDate][indexTime]))
+            // закинули доступные места в локалку
+            localStorage.setItem(
+                "placesLocal",
+                JSON.stringify(item.places[data.indexOfDate][indexTime])
+            )
+        }
     }
 
     const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
@@ -55,3 +59,25 @@ function Film() {
 }
 
 export default Film
+
+
+    // const clickOnTime = (item) => {
+    //     // определяю индекс времени
+    //     const indexTime = data.timeFilm.indexOf(item)
+
+    //     // пробигаюсь по всем объектам с фильмами
+    //     data.data.map((item) => {
+    //         // если фильм в объекта совпадает с тем на который нажал пользователь
+    //         if (item.name === data.nameFilm) {
+    //             // устанавливаем PlacesFilm - доступные места
+    //             dispatch(
+    //                 setPlacesFilm(item.places[data.indexOfDate][indexTime])
+    //             )
+    //             // закинули доступные места в локалку
+    //             localStorage.setItem(
+    //                 "placesLocal",
+    //                 JSON.stringify(item.places[data.indexOfDate][indexTime])
+    //             )
+    //         }
+    //     })
+    // }
