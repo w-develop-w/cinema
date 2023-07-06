@@ -176,7 +176,7 @@ function Places() {
         // const keys = ["key1", "key2", "key3"]
         // const values = ["value1", "value2", "value3"]
 
-        // objPlaces - объединенный объект из ключей и значений 
+        // objPlaces - объединенный объект из ключей и значений
         const objPlaces = keys.reduce((result, key, index) => {
             result[key] = values[index]
             return result
@@ -184,10 +184,32 @@ function Places() {
 
         console.log(objPlaces)
 
+        const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
+        // console.log(allFilmsLocal)
 
+        if (allFilmsLocal) {
+            allFilmsLocal.map((item) => {
+                // const dateFilm = item.dates.includes(infoForPlacesLocal[1])
+                const indexDateFilm = item.dates.indexOf(infoForPlacesLocal[1])
 
-        
+                const arrTimes = item.time[indexDateFilm]
+                // const timeFilm = arrTimes.includes(infoForPlacesLocal[2])
+                const indexTimeFilm = arrTimes.indexOf(infoForPlacesLocal[2])
 
+                if (
+                    item.name === infoForPlacesLocal[0] &&
+                    item.dates.includes(infoForPlacesLocal[1]) &&
+                    item.time[indexDateFilm].includes(infoForPlacesLocal[2])
+                ) {
+                    // корректируем allFilmsLocal - меняем в нем старый объект 
+                    // на новый - с обновленной информацие о местах
+                    item.places[indexDateFilm][indexTimeFilm] = objPlaces
+                }
+                return item
+            })
+
+            console.log(allFilmsLocal)
+        }
     }
 
     return (
