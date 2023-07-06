@@ -1,42 +1,47 @@
-.container {
+// .container {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh;
+//     .containerBtn {
+//         display: flex;
+//         flex-wrap: wrap;
+//         justify-content: center;
+//         align-items: center;
+//         flex-direction: column;
+//         .button {
+//             border: none;
+//             margin: 5px;
+//             padding: 10px;
+//             font-size: 16px;
+//             color: white; // Устанавливаем белый цвет текста по умолчанию
+//             &.small {
+//                 // font-size: 12px; // Задаем меньший размер шрифта для кнопок с одной цифрой
+//                 padding: 10px 14.4px;
+//             }
+            
+//             &.green {
+//                 background-color: green;
+//                 color: black; // Устанавливаем черный цвет текста для зеленой кнопки
+//             }
+            
+//             &.red {
+//                 background-color: red;
+//                 color: white; // Устанавливаем белый цвет текста для красной кнопки
+//             }
+//         }
+//     }
+// }
+
+
+.containerBtn {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    .containerBtn {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        // .button {
-        //     border: none;
-        //     margin: 5px;
-        //     padding: 10px;
-        //     font-size: 16px;
-        //     color: white; // Устанавливаем белый цвет текста по умолчанию
-        //     &.small {
-        //         // font-size: 12px; // Задаем меньший размер шрифта для кнопок с одной цифрой
-        //         padding: 10px 14.4px;
-        //     }
-            
-        //     &.button.green {
-        //         background-color: green;
-        //         color: black; // Устанавливаем черный цвет текста для зеленой кнопки
-        //     }
-            
-        //     &.button.red {
-        //         background-color: red;
-        //         color: white; // Устанавливаем белый цвет текста для красной кнопки
-        //     }
-        // }
-    }
+    gap: 10px;
+    max-width: 1000px; /* Ограничение на максимальную ширину контейнера */
+    margin: 0 auto; /* Центрирование контейнера по горизонтали */
 }
-
-
-h1 {
-    color: white;
-    font-size: 40px;
-}
-
+  
 

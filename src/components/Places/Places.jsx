@@ -70,11 +70,15 @@ function Places() {
                         dateFilm &&
                         timeFilm
                     ) {
-                        return <h1 key={index}>Well!</h1>
-                        // const indexOfDate = item.dates.indexOf(infoForPlacesLocal[1])
-                        // const indexOfTime = item.time.indexOf(infoForPlacesLocal[2])
+                        // return <h1 key={index}>Well!</h1>
 
-                        // console.log(item.places[indexOfDate][indexOfTime])
+                        const keys = Object.keys(
+                            item.places[indexDateFilm][indexTimeFilm]
+                        )
+                        console.log(keys)
+                        // const values = Object.values(item.places[indexDateFilm][indexTimeFilm])
+
+                        return keys.map((item, index) => <button key={index}>{item}</button>);
                     }
                 })}
             </div>
