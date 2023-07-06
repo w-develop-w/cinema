@@ -51,19 +51,31 @@ function Places() {
     return (
         <div className={styles.container}>
             <div className={styles.containerBtn}>
-                {allFilmsLocal.map((item) => {
-                    // if (
-                    //     item.name === infoForPlacesLocal[0] &&
-                    //     item.dates.includes(infoForPlacesLocal[1]) &&
-                    //     item.time.includes(infoForPlacesLocal[2])
-                    // ) {
+                {allFilmsLocal.map((item, index) => {
+                    // true/false
+                    const dateFilm = item.dates.includes(infoForPlacesLocal[1])
+                    const indexDateFilm = item.dates.indexOf(
+                        infoForPlacesLocal[1]
+                    )
 
-                        return <h1>Well!</h1>
+                    const arrTimes = item.time[indexDateFilm]
+                    // true/false
+                    const timeFilm = arrTimes.includes(infoForPlacesLocal[2])
+                    const indexTimeFilm = arrTimes.indexOf(
+                        infoForPlacesLocal[2]
+                    )
+
+                    if (
+                        item.name === infoForPlacesLocal[0] &&
+                        dateFilm &&
+                        timeFilm
+                    ) {
+                        return <h1 key={index}>Well!</h1>
                         // const indexOfDate = item.dates.indexOf(infoForPlacesLocal[1])
                         // const indexOfTime = item.time.indexOf(infoForPlacesLocal[2])
 
                         // console.log(item.places[indexOfDate][indexOfTime])
-                    // }
+                    }
                 })}
             </div>
         </div>
