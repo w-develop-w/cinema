@@ -75,10 +75,25 @@ function Places() {
                         const keys = Object.keys(
                             item.places[indexDateFilm][indexTimeFilm]
                         )
-                        console.log(keys)
-                        // const values = Object.values(item.places[indexDateFilm][indexTimeFilm])
+                        // console.log(keys)
+                        
+                        const values = Object.values(
+                            item.places[indexDateFilm][indexTimeFilm]
+                        )
 
-                        return keys.map((item, index) => <button key={index}>{item}</button>);
+                        console.log(values)
+                        return keys.map((item, index) => {
+                            const indexOfItem = keys.indexOf(item);
+                            const colorBtn = values[indexOfItem] ? "green" : "red";
+                            
+                            return (
+                                <button key={index} className={`${styles.button} ${styles[colorBtn]}`}>
+                                    {item}
+                                </button>
+                            );
+                        });
+                        
+                          
                     }
                 })}
             </div>
