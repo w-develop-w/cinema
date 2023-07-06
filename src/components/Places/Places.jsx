@@ -46,18 +46,43 @@ function Places() {
     }
 
     return (
-        <div>
-            {keys.map((item, index) => (
-                <button
-                    style={{ backgroundColor: values[index] ? "green" : "red" }}
-                    key={index}
-                    onClick={() => {
-                        clickOnPlace(index)
-                    }}
-                >
-                    {item}
-                </button>
-            ))}
+        <div className={styles.container}>
+            <div className={styles.containerBtn}>
+                {Array.from(
+                    { length: Math.ceil(keys.length / 10) },
+                    (_, rowIndex) => (
+                        <div key={rowIndex}>
+                            {keys
+                                .slice(rowIndex * 10, (rowIndex + 1) * 10)
+                                .map((item, index) => {
+                                    const isGreen =
+                                        values[rowIndex * 10 + index]
+                                    return (
+                                        <button
+                                            className={`${styles.button} ${
+                                                isGreen
+                                                    ? styles.green
+                                                    : styles.red
+                                            } ${
+                                                item.toString().length === 1
+                                                    ? styles.small
+                                                    : ""
+                                            }`}
+                                            key={rowIndex * 10 + index}
+                                            onClick={() => {
+                                                clickOnPlace(
+                                                    rowIndex * 10 + index
+                                                )
+                                            }}
+                                        >
+                                            {item}
+                                        </button>
+                                    )
+                                })}
+                        </div>
+                    )
+                )}
+            </div>
         </div>
     )
 }
