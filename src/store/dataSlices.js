@@ -11,6 +11,8 @@ const dataOfFilmsSlice = createSlice({
         indexTimeFilm: -1,
         indexOfDate: -1,
         idOfDate: 0,
+        // allFilms - получаю все фильмы из mockApi
+        allFilms: []
     },
     reducers: {
         setData: (state, action) => {
@@ -37,8 +39,11 @@ const dataOfFilmsSlice = createSlice({
         setIdOfDate: (state, action) => {
             state.idOfDate = action.payload
         },
+        setAllFilms: (state, action) => {
+            state.allFilms = action.payload
+        }
     },
 })
 
-export const { setData, setIndexOfDate, setIdOfDate, setNameFilm, setDateFilm, setTimeFilm, setIndexTimeFilm, setPlacesFilm } = dataOfFilmsSlice.actions
+export const { setData, setIndexOfDate, setIdOfDate, setNameFilm, setDateFilm, setTimeFilm, setIndexTimeFilm, setPlacesFilm, setAllFilms } = dataOfFilmsSlice.actions
 export default dataOfFilmsSlice.reducer

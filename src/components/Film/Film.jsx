@@ -8,27 +8,32 @@ function Film() {
     const data = useSelector((state) => state.dataOfFilms)
     const dispatch = useDispatch()
 
+    const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
 
-    const clickOnTime = (item) => {
+
+    const clickOnTime = (item, event) => {
+        // определяю индекс времени
         const indexTime = data.timeFilm.indexOf(item)
 
-        const filmPlacesLocal = JSON.parse(localStorage.getItem("placesLocal"))
-        const placesToUpdate = item.places[data.indexOfDate][indexTime]
+        // console.log(filmLocal[2][indexTime])
+        localStorage.setItem('infoForPlacesLocal', JSON.stringify([filmLocal[0], filmLocal[1], filmLocal[2][indexTime]]))
 
-        if (filmPlacesLocal || filmPlacesLocal !== placesToUpdate) {
-            dispatch(setPlacesFilm(filmPlacesLocal))
-            //   localStorage.setItem("placesLocal", JSON.stringify(placesToUpdate));
-        } else {
-            dispatch(setPlacesFilm(item.places[data.indexOfDate][indexTime]))
-            // закинули доступные места в локалку
-            localStorage.setItem(
-                "placesLocal",
-                JSON.stringify(item.places[data.indexOfDate][indexTime])
-            )
-        }
+        // пробигаюсь по всем объектам с фильмами
+        data.data.map((item) => {
+            // если фильм в объекта совпадает с тем на который нажал пользователь
+            if (item.name === data.nameFilm) {
+                // устанавливаем PlacesFilm - доступные места
+                dispatch(
+                    setPlacesFilm(item.places[data.indexOfDate][indexTime])
+                )
+                // закинули доступные места в локалку
+                localStorage.setItem(
+                        "placesLocal",
+                    JSON.stringify(item.places[data.indexOfDate][indexTime])
+                )
+            }
+        })
     }
-
-    const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
 
     return (
         <div className={styles.container}>
@@ -60,24 +65,21 @@ function Film() {
 
 export default Film
 
+// const clickOnTime = (item) => {
+//     const indexTime = data.timeFilm.indexOf(item)
 
-    // const clickOnTime = (item) => {
-    //     // определяю индекс времени
-    //     const indexTime = data.timeFilm.indexOf(item)
+//     const filmPlacesLocal = JSON.parse(localStorage.getItem("placesLocal"))
+//     const placesToUpdate = item.places[data.indexOfDate][indexTime]
 
-    //     // пробигаюсь по всем объектам с фильмами
-    //     data.data.map((item) => {
-    //         // если фильм в объекта совпадает с тем на который нажал пользователь
-    //         if (item.name === data.nameFilm) {
-    //             // устанавливаем PlacesFilm - доступные места
-    //             dispatch(
-    //                 setPlacesFilm(item.places[data.indexOfDate][indexTime])
-    //             )
-    //             // закинули доступные места в локалку
-    //             localStorage.setItem(
-    //                 "placesLocal",
-    //                 JSON.stringify(item.places[data.indexOfDate][indexTime])
-    //             )
-    //         }
-    //     })
-    // }
+//     if (filmPlacesLocal || filmPlacesLocal !== placesToUpdate) {
+//         dispatch(setPlacesFilm(filmPlacesLocal))
+//         //   localStorage.setItem("placesLocal", JSON.stringify(placesToUpdate));
+//     } else {
+//         dispatch(setPlacesFilm(item.places[data.indexOfDate][indexTime]))
+//         // закинули доступные места в локалку
+//         localStorage.setItem(
+//             "placesLocal",
+//             JSON.stringify(item.places[data.indexOfDate][indexTime])
+//         )
+//     }
+// }

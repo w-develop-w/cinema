@@ -81,15 +81,15 @@ function Main() {
 
     return (
         <div className={styles.container}>
-            {data.map((item) => (
-                <div className={styles.item} key={item.id}>
+            {data.map((item, index) => (
+                <div className={styles.item} key={index}>
                     <img src={item.img}></img>
 
                     <div className={styles.secondPart}>
                         <h2>{item.name}</h2>
                         {item.dates.map((el, index) => (
-                            <div className={styles.containerBtn}>
-                                <Link to="film" key={index}>
+                            <div className={styles.containerBtn} key={index}>
+                                <Link to="film">
                                     <button
                                         onClick={(event) => clickOnDate(event)}
                                     >
