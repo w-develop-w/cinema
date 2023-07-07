@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { setIndexTimeFilm, setPlacesFilm } from "../../store/dataSlices"
 import styles from "./Film.module.scss"
-import { Link, json } from "react-router-dom"
-import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 function Film() {
     const data = useSelector((state) => state.dataOfFilms)
@@ -11,18 +10,20 @@ function Film() {
     const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
 
 
-    const clickOnTime = (item, event) => {
+    const clickOnTime = (item) => {
         // определяю индекс времени
         const indexTime = data.timeFilm.indexOf(item)
 
         dispatch(setIndexTimeFilm(indexTime))
 
         // console.log(filmLocal[2][indexTime])
+
+        // устанавливаю в локальное хранилище название фильма, дату фильма, массив с временами
         localStorage.setItem('infoForPlacesLocal', JSON.stringify([filmLocal[0], filmLocal[1], filmLocal[2][indexTime]]))
 
         // пробигаюсь по всем объектам с фильмами
-        data.data.map((item) => {
-            // если фильм в объекта совпадает с тем на который нажал пользователь
+        data.data && data.data.map((item) => {
+            // если фильм в объекте совпадает с тем на который нажал пользователь
             if (item.name === data.nameFilm) {
                 // устанавливаем PlacesFilm - доступные места
                 dispatch(
@@ -35,6 +36,7 @@ function Film() {
                 )
             }
         })
+
     }
 
     return (
@@ -48,7 +50,7 @@ function Film() {
                 <h3>{filmLocal[1]}</h3>
 
                 <div className={styles.containerBtn}>
-                    {filmLocal[2].map((item, index) => (
+                    {filmLocal && filmLocal[2].map((item, index) => (
                         <Link to="choicePlaces" key={index}>
                             <button
                                 onClick={() => {
@@ -67,21 +69,3 @@ function Film() {
 
 export default Film
 
-// const clickOnTime = (item) => {
-//     const indexTime = data.timeFilm.indexOf(item)
-
-//     const filmPlacesLocal = JSON.parse(localStorage.getItem("placesLocal"))
-//     const placesToUpdate = item.places[data.indexOfDate][indexTime]
-
-//     if (filmPlacesLocal || filmPlacesLocal !== placesToUpdate) {
-//         dispatch(setPlacesFilm(filmPlacesLocal))
-//         //   localStorage.setItem("placesLocal", JSON.stringify(placesToUpdate));
-//     } else {
-//         dispatch(setPlacesFilm(item.places[data.indexOfDate][indexTime]))
-//         // закинули доступные места в локалку
-//         localStorage.setItem(
-//             "placesLocal",
-//             JSON.stringify(item.places[data.indexOfDate][indexTime])
-//         )
-//     }
-// }

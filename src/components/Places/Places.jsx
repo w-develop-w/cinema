@@ -4,22 +4,27 @@ import styles from "./Places.module.scss"
 import { useEffect } from "react"
 import axios from "axios"
 
-// export const updateData = async (idFilm, ) => {
+// export const updateData = async (idFilm, clickedItem) => {
 //     try {
+//         await axios.post(
+//             `https://6478d572362560649a2e842a.mockapi.io/${idFilm}`,
+//             JSON.stringify(clickedItem)
+//         )
 
-//       await axios.post(
-//         `https://6478d572362560649a2e842a.mockapi.io/cinema/${idFilm}`,
-//         allFilmsLocal
-//       );
-
-//       // Дополнительный код после успешного обновления данных
 //     } catch (error) {
-//       console.error(error);
+//         console.error(error)
 //     }
-//   };
+// }
 
-
-
+export const deleteFilmFromMockAPi = async (idFilm) => {
+    try {
+        await axios.delete(
+            `https://6478d572362560649a2e842a.mockapi.io/${idFilm}`
+        )
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 function Places() {
     const dispatch = useDispatch()
@@ -38,6 +43,7 @@ function Places() {
                     "allFilmsLocal",
                     JSON.stringify(allFilms.data)
                 )
+
                 dispatch(setAllFilms(allFilms.data)) // Сохраняем все фильмы в состоянии
             } catch (error) {
                 console.error(error)
@@ -65,122 +71,125 @@ function Places() {
         return <div>Loading...</div> // Отображаем загрузку или другой индикатор ожидания
     }
 
-    const clickOnPlace = (event, keys, values, idFilm) => {
+    // const clickOnPlace = (event, keys, values, idFilm) => {
+    //     // console.log(Number(data.indexOfDate))
+    //     // console.log(Number(data.indexTimeFilm))
 
-        // console.log(Number(data.indexOfDate))
-        // console.log(Number(data.indexTimeFilm))
-        
-        // определяю число на кнопке
-        const textContentBtn = event.target.textContent
-        // console.log(textContentBtn)
-        // опрелделяю индекс числа в массиве ключей
-        const indexBtn = keys.indexOf(textContentBtn)
-        // console.log(indexBtn)
-        // по данному индексу меняю значение на противоположное в массиве values
-        values[indexBtn] = !values[indexBtn]
-        // console.log(values[indexBtn])
-        
-        // objPlaces - объединенный объект из ключей и значений
-        const objPlaces = keys.reduce((result, key, index) => {
-            result[key] = values[index]
-            return result
-        }, {})
-        
-        // console.log(objPlaces)
-        
-        const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
-        // console.log(allFilmsLocal)
-        
-        if (allFilmsLocal) {
-            // allFilmsLocal.map((item) => {
-            //     const indexDateFilm = item.dates.indexOf(infoForPlacesLocal[1])
-                
-            //     const arrTimes = item.time[indexDateFilm]
-            //     const indexTimeFilm = arrTimes.indexOf(infoForPlacesLocal[2])
-                
-            //     if (
-            //         item.name === infoForPlacesLocal[0] &&
-            //         item.dates.includes(infoForPlacesLocal[1]) &&
-            //         item.time[indexDateFilm].includes(infoForPlacesLocal[2])
-            //     ) {
-            //         // корректируем allFilmsLocal - меняем в нем старый объект
-            //         // на новый - с обновленной информацие о местах
-            //         item.places[indexDateFilm][indexTimeFilm] = objPlaces
-            //     }
-            //     return item
-            // })
+    //     // определяю число на кнопке
+    //     const textContentBtn = event.target.textContent
+    //     // console.log(textContentBtn)
+    //     // опрелделяю индекс числа в массиве ключей
+    //     const indexBtn = keys.indexOf(textContentBtn)
+    //     // console.log(indexBtn)
+    //     // по данному индексу меняю значение на противоположное в массиве values
+    //     values[indexBtn] = !values[indexBtn]
+    //     // console.log(values[indexBtn])
 
+    //     // objPlaces - объединенный объект из ключей и значений
+    //     const objPlaces = keys.reduce((result, key, index) => {
+    //         result[key] = values[index]
+    //         return result
+    //     }, {})
 
-            // ---------------------------------------
-            allFilmsLocal.map(item => {
-                // находим объект фильма который пользователь выбрал 
-                if(item.id = idFilm) {
-                    
-                    let clickedItem =  item
-                    // меняем в данном объекте фильма в places соответствующий объект на измененный объект 
-                    clickedItem.places[Number(data.indexOfDate)][Number(data.indexTimeFilm)] = objPlaces
-                    console.log(clickedItem)
+    //     // console.log(objPlaces)
+
+    //     const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
+    //     // console.log(allFilmsLocal)
+
+    //     if (allFilmsLocal) {
+    //         allFilmsLocal.map((item) => {
+    //             // находим объект фильма который пользователь выбрал
+    //             if ((item.id = idFilm)) {
+    //                 let clickedItem = item
+    //                 // меняем в данном объекте фильма в places соответствующий объект на измененный объект
+    //                 clickedItem.places[Number(data.indexOfDate)][
+    //                     Number(data.indexTimeFilm)
+    //                 ] = objPlaces
+    //                 console.log(clickedItem)
+    //                 updateData(idFilm,clickedItem)
+    //             }
+    //         })
+    //     }
+
+    //     // id фильма
+    //     console.log(`idFilm: ${idFilm}`)
+
+    // }
+
+    const clickOnPlace = (data) => {
+
+        // название фильма, который выбрал пользователь
+        // infoForPlacesLocal[0]
+
+        // const nameFilm = infoForPlacesLocal[0]
+        if(data) {
+            data.allFilms.map(item => {
+                if(item.name === infoForPlacesLocal[0]) {
+                    let idFilm = Number(item.id)
+                    deleteFilmFromMockAPi(Number(idFilm))
                 }
             })
-            // ---------------------------------------
-            
-            // console.log(allFilmsLocal)
-            
-            // updateData(allFilmsLocal)  
         }
 
-
-        // id фильма 
-        // console.log(`idFilm: ${idFilm}`)
     }
 
     return (
         <div className={styles.container}>
             <div className={styles.containerBtn}>
                 {allFilmsLocal.map((item) => {
-                    const dateFilm = item.dates.includes(infoForPlacesLocal[1])
-                    const indexDateFilm = item.dates.indexOf(
-                        infoForPlacesLocal[1]
-                    )
+                    if (item.id !== 1) {
+                        const dateFilm = item.dates.includes(
+                            infoForPlacesLocal[1]
+                        )
+                        const indexDateFilm = item.dates.indexOf(
+                            infoForPlacesLocal[1]
+                        )
+                        const arrTimes = item.time[indexDateFilm]
+                        const timeFilm = arrTimes.includes(
+                            infoForPlacesLocal[2]
+                        )
+                        const indexTimeFilm = arrTimes.indexOf(
+                            infoForPlacesLocal[2]
+                        )
 
-                    const arrTimes = item.time[indexDateFilm]
-                    const timeFilm = arrTimes.includes(infoForPlacesLocal[2])
-                    const indexTimeFilm = arrTimes.indexOf(
-                        infoForPlacesLocal[2]
-                    )
-
-                    
-                    if (
-                        item.name === infoForPlacesLocal[0] &&
-                        dateFilm &&
-                        timeFilm
+                        if (
+                            item.name === infoForPlacesLocal[0] &&
+                            dateFilm &&
+                            timeFilm
                         ) {
-                        const idFilm = item.id
-                        const keys = Object.keys(
-                            item.places[indexDateFilm][indexTimeFilm]
-                        )
-                        const values = Object.values(
-                            item.places[indexDateFilm][indexTimeFilm]
-                        )
-
-                        return keys.map((item, index) => {
-                            const indexOfItem = keys.indexOf(item)
-                            const colorBtn = values[indexOfItem]
-                                ? "green"
-                                : "red"
-
-                            return (
-                                <button
-                                    key={index}
-                                    className={`${styles.button} ${styles[colorBtn]}`}
-                                    onClick={(event) => {
-                                        clickOnPlace(event, keys, values, idFilm)
-                                    }}
-                                >
-                                    {item}
-                                </button>
+                            const idFilm = Number(item.id)
+                            const keys = Object.keys(
+                                item.places[indexDateFilm][indexTimeFilm]
                             )
-                        })
+                            const values = Object.values(
+                                item.places[indexDateFilm][indexTimeFilm]
+                            )
+
+                            return keys.map((item, index) => {
+                                const indexOfItem = keys.indexOf(item)
+                                const colorBtn = values[indexOfItem]
+                                    ? "green"
+                                    : "red"
+
+                                return (
+                                    <button
+                                        key={index}
+                                        className={`${styles.button} ${styles[colorBtn]}`}
+                                        onClick={() => {
+                                            clickOnPlace(
+                                                data
+                                                // event,
+                                                // keys,
+                                                // values,
+                                                // idFilm
+                                            )
+                                        }}
+                                    >
+                                        {item}
+                                    </button>
+                                )
+                            })
+                        }
                     }
                 })}
             </div>

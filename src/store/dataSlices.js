@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const dataOfFilmsSlice = createSlice({
     name: "dataOfFilms",
     initialState: {
+        // все фильмы - массив со всеми объектами
         data: [],
         nameFilm: '',
         dateFilm: '',

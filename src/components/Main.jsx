@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux"
 import {
     setData,
     setIndexOfDate,
-    setIdOfDate,
     setNameFilm,
     setDateFilm,
     setTimeFilm,
@@ -14,10 +13,9 @@ import { Link } from "react-router-dom"
 
 function Main() {
     const data = useSelector((state) => state.dataOfFilms.data)
-    const indexOfDate = useSelector((state) => state.dataOfFilms.indexOfDate)
-    const idOfDate = useSelector((state) => state.dataOfFilms.idOfDate)
     const dispatch = useDispatch()
 
+    // получаю все фильмы 
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,76 +31,83 @@ function Main() {
         fetchData()
     }, [])
 
-    // useEffect(() => {
-    //     console.log(data)
-    // }, [data])
 
     const clickOnDate = (event) => {
         const date = event.target.textContent
-        let indexDate = 0
-        let idDate = 0
-
+        // let idDate = 0
+        
+        // перебираем все фильмы из состояния date 
         data.forEach((item) => {
-            const index = item.dates.indexOf(date)
-            if (index !== -1) {
-                indexDate = index
-                idDate = item.id
-
-                dispatch(setNameFilm(item.name))
-                dispatch(setDateFilm(date))
-                dispatch(setTimeFilm(item.time[indexDate]))
-
-                localStorage.setItem(
-                    "filmLocal",
-                    // устанавливаю инфу о фильме
-                    // название --- дату --- доступное время --- картинку
-                    // вот  почему использую  indexDate в item.time[indexDate] ---  
-                    // "dates": ["04.07.2023", "05.07.2023"],
-                    // "time": [
-                    //     ["13:00", "16:00", "19:00"],
-                    //     ["12:00", "15:00", "18:00"]
-                    // ]
-                    
-                    JSON.stringify([
-                        item.name,
-                        date,
-                        item.time[indexDate],
-                        item.img,
-                    ])
-                )
+            if(item.id !== 1) {
+                // Определяем индекс даты на которую нажал пользователь 
+                const index = item.dates.indexOf(date)
+                
+                if (index !== -1) {
+                    let indexDate  = 0
+                    indexDate = index
+    
+                    // устанавливаю в хранилище название дату и время фильма которые выбрал пользователь
+                    // и идекс даты 
+                    dispatch(setNameFilm(item.name))
+                    dispatch(setDateFilm(date))
+                    dispatch(setTimeFilm(item.time[indexDate]))
+                    dispatch(setIndexOfDate(indexDate))
+    
+                    localStorage.setItem(
+                        "filmLocal",
+                        // устанавливаю инфу о фильме
+                        // название --- дату --- доступное время --- картинку
+                        // вот  почему использую  indexDate в item.time[indexDate] ---  
+                        // "dates": ["04.07.2023", "05.07.2023"],
+                        // "time": [
+                        //     ["13:00", "16:00", "19:00"],
+                        //     ["12:00", "15:00", "18:00"]
+                        // ]
+                        
+                        JSON.stringify([
+                            item.name,
+                            date,
+                            // это массив из времени
+                            item.time[indexDate],
+                            item.img,
+                        ])
+                    )
+                }
             }
+            
         })
 
-        dispatch(setIndexOfDate(indexDate))
     }
 
-    // const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
-    // console.log(filmLocal)
 
     return (
         <div className={styles.container}>
-            {data.map((item, index) => (
-                <div className={styles.item} key={index}>
-                    <img src={item.img}></img>
-
-                    <div className={styles.secondPart}>
-                        <h2>{item.name}</h2>
-                        {item.dates.map((el, index) => (
-                            <div className={styles.containerBtn} key={index}>
-                                <Link to="film">
-                                    <button
-                                        onClick={(event) => clickOnDate(event)}
-                                    >
-                                        {el}
-                                    </button>
-                                </Link>
+            {data && data.map((item, index) => {
+                if (item.id !== 1) {
+                    return (
+                        <div className={styles.item} key={index}>
+                            <img src={item.img} alt="" />
+    
+                            <div className={styles.secondPart}>
+                                <h2>{item.name}</h2>
+                                {item.dates && item.dates.map((el, index) => (
+                                    <div className={styles.containerBtn} key={index}>
+                                        <Link to="film">
+                                            <button onClick={(event) => clickOnDate(event)}>
+                                                {el}
+                                            </button>
+                                        </Link>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
+                        </div>
+                    );
+                }
+                return null;
+            })}
         </div>
-    )
+    );
+    
 }
 
 export default Main
