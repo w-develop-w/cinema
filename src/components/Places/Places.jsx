@@ -4,6 +4,23 @@ import styles from "./Places.module.scss"
 import { useEffect } from "react"
 import axios from "axios"
 
+// export const updateData = async (idFilm, ) => {
+//     try {
+
+//       await axios.post(
+//         `https://6478d572362560649a2e842a.mockapi.io/cinema/${idFilm}`,
+//         allFilmsLocal
+//       );
+
+//       // Дополнительный код после успешного обновления данных
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+
+
+
 function Places() {
     const dispatch = useDispatch()
     const data = useSelector((state) => state.dataOfFilms)
@@ -37,80 +54,84 @@ function Places() {
     const infoForPlacesLocal = JSON.parse(
         localStorage.getItem("infoForPlacesLocal")
     )
-    console.log(infoForPlacesLocal)
+    // console.log(infoForPlacesLocal)
 
     const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
 
-    console.log(allFilmsLocal)
+    // console.log(allFilmsLocal)
 
     // Проверяем наличие данных в allFilmsLocal
     if (!allFilmsLocal) {
         return <div>Loading...</div> // Отображаем загрузку или другой индикатор ожидания
     }
 
-    const clickOnPlace = (event, keys, values) => {
+    const clickOnPlace = (event, keys, values, idFilm) => {
+
+        // console.log(Number(data.indexOfDate))
+        // console.log(Number(data.indexTimeFilm))
+        
         // определяю число на кнопке
         const textContentBtn = event.target.textContent
-        console.log(textContentBtn)
+        // console.log(textContentBtn)
         // опрелделяю индекс числа в массиве ключей
         const indexBtn = keys.indexOf(textContentBtn)
-        console.log(indexBtn)
+        // console.log(indexBtn)
         // по данному индексу меняю значение на противоположное в массиве values
         values[indexBtn] = !values[indexBtn]
-        console.log(values[indexBtn])
-
+        // console.log(values[indexBtn])
+        
         // objPlaces - объединенный объект из ключей и значений
         const objPlaces = keys.reduce((result, key, index) => {
             result[key] = values[index]
             return result
         }, {})
-
-        console.log(objPlaces)
-
+        
+        // console.log(objPlaces)
+        
         const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
         // console.log(allFilmsLocal)
-
+        
         if (allFilmsLocal) {
-            allFilmsLocal.map((item) => {
-                const indexDateFilm = item.dates.indexOf(infoForPlacesLocal[1])
+            // allFilmsLocal.map((item) => {
+            //     const indexDateFilm = item.dates.indexOf(infoForPlacesLocal[1])
+                
+            //     const arrTimes = item.time[indexDateFilm]
+            //     const indexTimeFilm = arrTimes.indexOf(infoForPlacesLocal[2])
+                
+            //     if (
+            //         item.name === infoForPlacesLocal[0] &&
+            //         item.dates.includes(infoForPlacesLocal[1]) &&
+            //         item.time[indexDateFilm].includes(infoForPlacesLocal[2])
+            //     ) {
+            //         // корректируем allFilmsLocal - меняем в нем старый объект
+            //         // на новый - с обновленной информацие о местах
+            //         item.places[indexDateFilm][indexTimeFilm] = objPlaces
+            //     }
+            //     return item
+            // })
 
-                const arrTimes = item.time[indexDateFilm]
-                const indexTimeFilm = arrTimes.indexOf(infoForPlacesLocal[2])
 
-                if (
-                    item.name === infoForPlacesLocal[0] &&
-                    item.dates.includes(infoForPlacesLocal[1]) &&
-                    item.time[indexDateFilm].includes(infoForPlacesLocal[2])
-                ) {
-                    // корректируем allFilmsLocal - меняем в нем старый объект
-                    // на новый - с обновленной информацие о местах
-                    item.places[indexDateFilm][indexTimeFilm] = objPlaces
+            // ---------------------------------------
+            allFilmsLocal.map(item => {
+                // находим объект фильма который пользователь выбрал 
+                if(item.id = idFilm) {
+                    
+                    let clickedItem =  item
+                    // меняем в данном объекте фильма в places соответствующий объект на измененный объект 
+                    clickedItem.places[Number(data.indexOfDate)][Number(data.indexTimeFilm)] = objPlaces
+                    console.log(clickedItem)
                 }
-                return item
             })
-
-            console.log(allFilmsLocal)
-
-            useEffect(() => {
-                const updateData = async () => {
-                  try {
-    
+            // ---------------------------------------
             
-                    await axios.put(
-                      "https://6478d572362560649a2e842a.mockapi.io/cinema",
-                      allFilmsLocal
-                    );
+            // console.log(allFilmsLocal)
             
-                    // Дополнительный код после успешного обновления данных
-                  } catch (error) {
-                    console.error(error);
-                  }
-                };
-            
-                updateData();
-              }, []);
-            
+            // updateData(allFilmsLocal)  
         }
+
+
+        // id фильма 
+        // console.log(`idFilm: ${idFilm}`)
     }
 
     return (
@@ -128,11 +149,13 @@ function Places() {
                         infoForPlacesLocal[2]
                     )
 
+                    
                     if (
                         item.name === infoForPlacesLocal[0] &&
                         dateFilm &&
                         timeFilm
-                    ) {
+                        ) {
+                        const idFilm = item.id
                         const keys = Object.keys(
                             item.places[indexDateFilm][indexTimeFilm]
                         )
@@ -151,7 +174,7 @@ function Places() {
                                     key={index}
                                     className={`${styles.button} ${styles[colorBtn]}`}
                                     onClick={(event) => {
-                                        clickOnPlace(event, keys, values)
+                                        clickOnPlace(event, keys, values, idFilm)
                                     }}
                                 >
                                     {item}

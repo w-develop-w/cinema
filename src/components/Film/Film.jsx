@@ -15,6 +15,8 @@ function Film() {
         // определяю индекс времени
         const indexTime = data.timeFilm.indexOf(item)
 
+        dispatch(setIndexTimeFilm(indexTime))
+
         // console.log(filmLocal[2][indexTime])
         localStorage.setItem('infoForPlacesLocal', JSON.stringify([filmLocal[0], filmLocal[1], filmLocal[2][indexTime]]))
 
