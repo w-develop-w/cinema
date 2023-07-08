@@ -20,7 +20,7 @@ function Main() {
         const fetchData = async () => {
             try {
                 const response = await axios.get(
-                    "https://6478d572362560649a2e842a.mockapi.io/cinema"
+                    "http://localhost:3001/films"
                 )
                 dispatch(setData(response.data))
             } catch (error) {
@@ -83,7 +83,7 @@ function Main() {
     return (
         <div className={styles.container}>
             {data && data.map((item, index) => {
-                if (item.id !== 1) {
+                // if (item.id !== 1) {
                     return (
                         <div className={styles.item} key={index}>
                             <img src={item.img} alt="" />
@@ -102,9 +102,10 @@ function Main() {
                             </div>
                         </div>
                     );
-                }
+                // }
                 return null;
-            })}
+            }
+            )}
         </div>
     );
     

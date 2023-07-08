@@ -37,7 +37,7 @@ function Places() {
         const fetchData = async () => {
             try {
                 const allFilms = await axios.get(
-                    "https://6478d572362560649a2e842a.mockapi.io/cinema"
+                    "http://localhost:3001/films"
                 )
                 localStorage.setItem(
                     "allFilmsLocal",
@@ -137,7 +137,7 @@ function Places() {
         <div className={styles.container}>
             <div className={styles.containerBtn}>
                 {allFilmsLocal.map((item) => {
-                    if (item.id !== 1) {
+                    // if (item.id !== 1) {
                         const dateFilm = item.dates.includes(
                             infoForPlacesLocal[1]
                         )
@@ -190,7 +190,7 @@ function Places() {
                                 )
                             })
                         }
-                    }
+                    // }
                 })}
             </div>
         </div>
