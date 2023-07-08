@@ -38,7 +38,7 @@ function Main() {
         
         // перебираем все фильмы из состояния date 
         data.forEach((item) => {
-            if(item.id !== 1) {
+            // if(item.id !== 1) {
                 // Определяем индекс даты на которую нажал пользователь 
                 const index = item.dates.indexOf(date)
                 
@@ -73,7 +73,7 @@ function Main() {
                         ])
                     )
                 }
-            }
+            // }
             
         })
 

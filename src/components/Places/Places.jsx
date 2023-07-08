@@ -4,27 +4,20 @@ import styles from "./Places.module.scss"
 import { useEffect } from "react"
 import axios from "axios"
 
-// export const updateData = async (idFilm, clickedItem) => {
-//     try {
-//         await axios.post(
-//             `https://6478d572362560649a2e842a.mockapi.io/${idFilm}`,
-//             JSON.stringify(clickedItem)
-//         )
-
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-
-export const deleteFilmFromMockAPi = async (idFilm) => {
+export const updateData = async (idFilm, clickedItem) => {
     try {
-        await axios.delete(
-            `https://6478d572362560649a2e842a.mockapi.io/${idFilm}`
+        await axios.put(
+            `http://localhost:3001/films/${idFilm}`,
+            clickedItem
+
         )
+
     } catch (error) {
         console.error(error)
     }
 }
+
+
 
 function Places() {
     const dispatch = useDispatch()
@@ -71,65 +64,48 @@ function Places() {
         return <div>Loading...</div> // Отображаем загрузку или другой индикатор ожидания
     }
 
-    // const clickOnPlace = (event, keys, values, idFilm) => {
-    //     // console.log(Number(data.indexOfDate))
-    //     // console.log(Number(data.indexTimeFilm))
+    const clickOnPlace = (event, keys, values, idFilm) => {
+        // console.log(Number(data.indexOfDate))
+        // console.log(Number(data.indexTimeFilm))
 
-    //     // определяю число на кнопке
-    //     const textContentBtn = event.target.textContent
-    //     // console.log(textContentBtn)
-    //     // опрелделяю индекс числа в массиве ключей
-    //     const indexBtn = keys.indexOf(textContentBtn)
-    //     // console.log(indexBtn)
-    //     // по данному индексу меняю значение на противоположное в массиве values
-    //     values[indexBtn] = !values[indexBtn]
-    //     // console.log(values[indexBtn])
+        // определяю число на кнопке
+        const textContentBtn = event.target.textContent
+        // console.log(textContentBtn)
+        // опрелделяю индекс числа в массиве ключей
+        const indexBtn = keys.indexOf(textContentBtn)
+        // console.log(indexBtn)
+        // по данному индексу меняю значение на противоположное в массиве values
+        values[indexBtn] = !values[indexBtn]
+        // console.log(values[indexBtn])
 
-    //     // objPlaces - объединенный объект из ключей и значений
-    //     const objPlaces = keys.reduce((result, key, index) => {
-    //         result[key] = values[index]
-    //         return result
-    //     }, {})
+        // objPlaces - объединенный объект из ключей и значений
+        const objPlaces = keys.reduce((result, key, index) => {
+            result[key] = values[index]
+            return result
+        }, {})
 
-    //     // console.log(objPlaces)
+        // console.log(objPlaces)
 
-    //     const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
-    //     // console.log(allFilmsLocal)
+        const allFilmsLocal = JSON.parse(localStorage.getItem("allFilmsLocal"))
+        // console.log(allFilmsLocal)
 
-    //     if (allFilmsLocal) {
-    //         allFilmsLocal.map((item) => {
-    //             // находим объект фильма который пользователь выбрал
-    //             if ((item.id = idFilm)) {
-    //                 let clickedItem = item
-    //                 // меняем в данном объекте фильма в places соответствующий объект на измененный объект
-    //                 clickedItem.places[Number(data.indexOfDate)][
-    //                     Number(data.indexTimeFilm)
-    //                 ] = objPlaces
-    //                 console.log(clickedItem)
-    //                 updateData(idFilm,clickedItem)
-    //             }
-    //         })
-    //     }
-
-    //     // id фильма
-    //     console.log(`idFilm: ${idFilm}`)
-
-    // }
-
-    const clickOnPlace = (data) => {
-
-        // название фильма, который выбрал пользователь
-        // infoForPlacesLocal[0]
-
-        // const nameFilm = infoForPlacesLocal[0]
-        if(data) {
-            data.allFilms.map(item => {
-                if(item.name === infoForPlacesLocal[0]) {
-                    let idFilm = Number(item.id)
-                    deleteFilmFromMockAPi(Number(idFilm))
+        if (allFilmsLocal) {
+            allFilmsLocal.map((item) => {
+                // находим объект фильма который пользователь выбрал
+                if ((item.id === idFilm)) {
+                    let clickedItem = item
+                    // меняем в данном объекте фильма в places соответствующий объект на измененный объект
+                    clickedItem.places[Number(data.indexOfDate)][
+                        Number(data.indexTimeFilm)
+                    ] = objPlaces
+                    console.log(clickedItem)
+                    updateData(idFilm,clickedItem)
                 }
             })
         }
+
+        // id фильма
+        console.log(`idFilm: ${idFilm}`)
 
     }
 
@@ -175,13 +151,13 @@ function Places() {
                                     <button
                                         key={index}
                                         className={`${styles.button} ${styles[colorBtn]}`}
-                                        onClick={() => {
+                                        onClick={(event) => {
                                             clickOnPlace(
-                                                data
-                                                // event,
-                                                // keys,
-                                                // values,
-                                                // idFilm
+                                                // data
+                                                event,
+                                                keys,
+                                                values,
+                                                idFilm
                                             )
                                         }}
                                     >
@@ -198,3 +174,7 @@ function Places() {
 }
 
 export default Places
+
+
+
+
