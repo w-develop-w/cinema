@@ -8,7 +8,7 @@ import {
     setNameFilm,
     setDateFilm,
     setTimeFilm,
-} from "../store/dataSlices"
+} from "../../store/dataSlices"
 import { Link } from "react-router-dom"
 
 function Main() {
