@@ -9,16 +9,19 @@ function Film() {
 
     const filmLocal = JSON.parse(localStorage.getItem("filmLocal"))
 
-
+    // localStorage.setItem('timeFilm', JSON.stringify(data.timeFilm))
+    
     const clickOnTime = (item) => {
         // определяю индекс времени
-        const indexTime = data.timeFilm.indexOf(item)
+        const timeFilm = JSON.parse(localStorage.getItem('timeFilm'))
+        const indexTime = timeFilm.indexOf(item)
+        // const indexTime = data.timeFilm.indexOf(item)
 
         dispatch(setIndexTimeFilm(indexTime))
 
         // console.log(filmLocal[2][indexTime])
 
-        // устанавливаю в локальное хранилище название фильма, дату фильма, массив с временами
+        // устанавливаю в локальное хранилище название фильма, дату фильма, время фильма
         localStorage.setItem('infoForPlacesLocal', JSON.stringify([filmLocal[0], filmLocal[1], filmLocal[2][indexTime]]))
 
         // пробигаюсь по всем объектам с фильмами

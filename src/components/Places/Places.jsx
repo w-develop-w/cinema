@@ -137,6 +137,9 @@ function Places() {
                             infoForPlacesLocal[2]
                         )
 
+                        // console.log(indexDateFilm)
+                        // console.log(indexTimeFilm)
+
                         if (
                             item.name === infoForPlacesLocal[0] &&
                             dateFilm &&
