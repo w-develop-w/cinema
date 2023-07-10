@@ -8,11 +8,12 @@ import {
     setNameFilm,
     setDateFilm,
     setTimeFilm,
+    setImageFilm,
 } from "../../store/dataSlices"
 import { Link } from "react-router-dom"
 
 function Main() {
-    const data = useSelector((state) => state.dataOfFilms.data)
+    const allFilms = useSelector((state) => state.dataOfFilms.allFilms)
     const dispatch = useDispatch()
 
     // получаю все фильмы
@@ -34,7 +35,7 @@ function Main() {
         // let idDate = 0
 
         // перебираем все фильмы из состояния date
-        data.forEach((item) => {
+        allFilms.forEach((item) => {
             // if(item.id !== 1) {
             // Определяем индекс даты на которую нажал пользователь
             const index = item.dates.indexOf(date)
@@ -45,41 +46,19 @@ function Main() {
 
                 // устанавливаю в хранилище название дату и время фильма(массив доступных времен) которые выбрал пользователь
                 // и идекс даты
+                dispatch(setImageFilm(item.img))
                 dispatch(setNameFilm(item.name))
                 dispatch(setDateFilm(date))
                 dispatch(setTimeFilm(item.time[indexDate]))
-                localStorage.setItem("timeFilm", JSON.stringify(item.time[indexDate]))
                 dispatch(setIndexOfDate(indexDate))
-
-                localStorage.setItem(
-                    "filmLocal",
-                    // устанавливаю инфу о фильме
-                    // название --- дату --- доступное время --- картинку
-                    // вот  почему использую  indexDate в item.time[indexDate] ---
-                    // "dates": ["04.07.2023", "05.07.2023"],
-                    // "time": [
-                    //     ["13:00", "16:00", "19:00"],
-                    //     ["12:00", "15:00", "18:00"]
-                    // ]
-
-                    JSON.stringify([
-                        item.name,
-                        date,
-                        // это массив из времени
-                        item.time[indexDate],
-                        item.img,
-                    ])
-                )
             }
-            // }
         })
     }
 
     return (
         <div className={styles.container}>
-            {data &&
-                data.map((item, index) => {
-                    // if (item.id !== 1) {
+            {allFilms &&
+                allFilms.map((item, index) => {
                     return (
                         <div className={styles.item} key={index}>
                             <img src={item.img} alt="" />
@@ -106,8 +85,6 @@ function Main() {
                             </div>
                         </div>
                     )
-                    // }
-                    // return null
                 })}
         </div>
     )
