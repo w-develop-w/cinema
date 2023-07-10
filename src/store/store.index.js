@@ -1,9 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataOfFilmsReducer from './dataSlices'
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import dataOfFilmsReducer from "./dataSlices";
 
-export default configureStore({
-    reducer: {
-        dataOfFilms: dataOfFilmsReducer, 
-        
-    },
-})
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, dataOfFilmsReducer);
+
+export const store = configureStore({
+  reducer: {
+    dataOfFilms: persistedReducer,
+  },
+});
+
+export const persistor = persistStore(store);
+
