@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setPlacesFilm, setAllFilms } from "../../store/dataSlices"
+import { setPlacesFilm, setAllFilms, setClickOnPlaces } from "../../store/dataSlices"
 import styles from "./Places.module.scss"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 
 export const updateData = async (idFilm, clickedItem) => {
@@ -23,6 +23,9 @@ function Places() {
     const dispatch = useDispatch()
     const data = useSelector((state) => state.dataOfFilms)
 
+    const [buttonClicked, setButtonClicked] = useState(false);
+
+
     // ---------------------------------------------------------------------------------------------
 
     // Получаем все фильмы с mockApi
@@ -38,13 +41,14 @@ function Places() {
                 )
 
                 dispatch(setAllFilms(allFilms.data)) // Сохраняем все фильмы в состоянии
+                setButtonClicked(!buttonClicked)
             } catch (error) {
                 console.error(error)
             }
         }
 
         fetchData()
-    }, [])
+    }, [buttonClicked])
 
     // инфа которую выбрал пользователь
     // название - дата - время
@@ -63,6 +67,7 @@ function Places() {
     if (!allFilmsLocal) {
         return <div>Loading...</div> // Отображаем загрузку или другой индикатор ожидания
     }
+
 
     const clickOnPlace = (event, keys, values, idFilm) => {
         // console.log(Number(data.indexOfDate))
@@ -100,12 +105,16 @@ function Places() {
                     ] = objPlaces
                     console.log(clickedItem)
                     updateData(idFilm,clickedItem)
+                    setButtonClicked(true);
                 }
             })
         }
 
         // id фильма
         console.log(`idFilm: ${idFilm}`)
+        // dispatch(setClickOnPlaces(!data.clickOnPlaces))
+
+
 
     }
 

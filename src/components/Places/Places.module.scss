@@ -10,9 +10,11 @@
 
     // .containerBtn {
         .button {
+            width: 35px;
+            height: 35px;
             border: none;
             margin: 5px;
-            padding: 10px;
+            // padding: 10px;
             font-size: 16px;
             // color: white; // Устанавливаем белый цвет текста по умолчанию
             &.small {
