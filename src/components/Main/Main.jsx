@@ -3,12 +3,12 @@ import styles from "./Main.module.scss"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
-    setData,
+    setAllFilms,
     setIndexOfDate,
+    setImageFilm,
     setNameFilm,
     setDateFilm,
     setTimeFilm,
-    setImageFilm,
 } from "../../store/dataSlices"
 import { Link } from "react-router-dom"
 
@@ -21,7 +21,7 @@ function Main() {
         const fetchData = async () => {
             try {
                 const response = await axios.get("http://localhost:3001/films")
-                dispatch(setData(response.data))
+                dispatch(setAllFilms(response.data))
             } catch (error) {
                 console.error(error)
             }
@@ -32,11 +32,9 @@ function Main() {
 
     const clickOnDate = (event) => {
         const date = event.target.textContent
-        // let idDate = 0
 
         // перебираем все фильмы из состояния date
         allFilms.forEach((item) => {
-            // if(item.id !== 1) {
             // Определяем индекс даты на которую нажал пользователь
             const index = item.dates.indexOf(date)
 

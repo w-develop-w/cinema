@@ -3,24 +3,19 @@ import { createSlice } from "@reduxjs/toolkit"
 const dataOfFilmsSlice = createSlice({
     name: "dataOfFilms",
     initialState: {
-        // все фильмы - массив со всеми объектами
-        // data: [],
-        allFilms: "",
+        allFilms: [],
         imageFilm: "",
         nameFilm: "",
         dateFilm: "",
-        timeFilm: "",
-        placesFilm: "",
-        indexTimeFilm: "",
-        indexOfDate: "",
-        idOfDate: "",
-        // allFilms - получаю все фильмы из mockApi
+        timeFilm: [],
+        currentTimeFilm: '',
+        placesFilm: [],
+        indexTimeFilm: -1,
+        indexOfDate: -1,
+        idOfDate: 0,
         clickOnPlaces: true,
     },
     reducers: {
-        // setData: (state, action) => {
-        //     state.data = action.payload
-        // },
         setAllFilms: (state, action) => {
             state.allFilms = action.payload
         },
@@ -35,6 +30,9 @@ const dataOfFilmsSlice = createSlice({
         },
         setTimeFilm: (state, action) => {
             state.timeFilm = action.payload
+        },
+        setCurrentTimeFilm: (state, action) => {
+            state.currentTimeFilm = action.payload
         },
         setPlacesFilm: (state, action) => {
             state.placesFilm = action.payload
@@ -58,13 +56,14 @@ export const {
     setData,
     setIndexOfDate,
     setIdOfDate,
+    setImageFilm,
     setNameFilm,
     setDateFilm,
     setTimeFilm,
+    setCurrentTimeFilm,
     setIndexTimeFilm,
     setPlacesFilm,
     setAllFilms,
     setClickOnPlaces,
-    setImageFilm,
 } = dataOfFilmsSlice.actions
 export default dataOfFilmsSlice.reducer

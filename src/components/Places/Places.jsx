@@ -27,7 +27,7 @@ function Places() {
                 const allFilms = await axios.get("http://localhost:3001/films")
 
                 dispatch(setAllFilms(allFilms.data))
-                setButtonClicked(!buttonClicked)
+                // setButtonClicked(!buttonClicked)
             } catch (error) {
                 console.error(error)
             }
@@ -66,7 +66,7 @@ function Places() {
                     ] = objPlaces
                     console.log(clickedItem)
                     updateData(idFilm, clickedItem)
-                    setButtonClicked(true)
+                    setButtonClicked(!buttonClicked)
                 }
             })
         }
@@ -80,10 +80,15 @@ function Places() {
             <div className={styles.containerBtn}>
                 {data.allFilms.map((item) => {
                     const dateFilm = item.dates.includes(data.dateFilm)
+                    // console.log(dateFilm)
                     const indexDateFilm = item.dates.indexOf(data.dateFilm)
+                    // console.log(indexDateFilm)
                     const arrTimes = item.time[indexDateFilm]
-                    const timeFilm = arrTimes.includes(data.timeFilm)
-                    const indexTimeFilm = arrTimes.indexOf(data.timeFilm)
+                    // console.log(arrTimes)
+                    // console.log(data.currentTimeFilm)
+                    const timeFilm = arrTimes.includes(data.currentTimeFilm)
+                    // console.log(timeFilm)
+                    const indexTimeFilm = arrTimes.indexOf(data.currentTimeFilm)
 
                     if (item.name === data.nameFilm && dateFilm && timeFilm) {
                         const idFilm = Number(item.id)

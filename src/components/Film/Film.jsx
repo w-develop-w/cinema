@@ -1,29 +1,33 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setIndexTimeFilm, setPlacesFilm } from "../../store/dataSlices"
+import { setIndexTimeFilm, setPlacesFilm, setCurrentTimeFilm } from "../../store/dataSlices"
 import styles from "./Film.module.scss"
 import { Link } from "react-router-dom"
 
 function Film() {
     const data = useSelector((state) => state.dataOfFilms)
     const dispatch = useDispatch()
-    
-    const clickOnTime = (item) => {
+
+    const clickOnTime = (item, event) => {
         // определяю индекс времени
+
+        dispatch(setCurrentTimeFilm(event.target.textContent))
+
         const indexTime = data.timeFilm.indexOf(item)
 
         dispatch(setIndexTimeFilm(indexTime))
-     
-        // пробигаюсь по всем объектам с фильмами
-        data.allFilms && data.allFilms.map((item) => {
-            // если фильм в объекте совпадает с тем на который нажал пользователь
-            if (item.name === data.nameFilm) {
-                // устанавливаем PlacesFilm - доступные места
-                dispatch(
-                    setPlacesFilm(item.places[data.indexOfDate][indexTime])
-                )
-            }
-        })
 
+        // пробигаюсь по всем объектам с фильмами
+        data.allFilms &&
+            data.allFilms.map((item) => {
+                // если фильм в объекте совпадает с тем на который нажал пользователь
+                if (item.name === data.nameFilm) {
+                    // устанавливаем PlacesFilm - доступные места
+                    dispatch(
+                        setPlacesFilm(item.places[data.indexOfDate][indexTime])
+                    )
+                
+                }
+            })
     }
 
     return (
@@ -37,17 +41,18 @@ function Film() {
                 <h3>{data.dateFilm}</h3>
 
                 <div className={styles.containerBtn}>
-                    {data.timeFilm && data.timeFilm.map((item, index) => (
-                        <Link to="choicePlaces" key={index}>
-                            <button
-                                onClick={() => {
-                                    clickOnTime(item)
-                                }}
-                            >
-                                {item}
-                            </button>
-                        </Link>
-                    ))}
+                    {data.timeFilm &&
+                        data.timeFilm.map((item, index) => (
+                            <Link to="choicePlaces" key={index}>
+                                <button
+                                    onClick={(event) => {
+                                        clickOnTime(item, event)
+                                    }}
+                                >
+                                    {item}
+                                </button>
+                            </Link>
+                        ))}
                 </div>
             </div>
         </div>
@@ -55,4 +60,3 @@ function Film() {
 }
 
 export default Film
-
