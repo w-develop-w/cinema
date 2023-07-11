@@ -1,36 +1,96 @@
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    max-width: 768px; /* Ограничение на максимальную ширину контейнера */
-    margin: 0 auto; /* Центрирование контейнера по горизонтали */
+    max-width: 768px; 
 
-
-    // .containerBtn {
+    .containerBtn {
+        display: flex;
+        width: 450px;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         .button {
             width: 35px;
             height: 35px;
             border: none;
+            border-radius: 7px;
             margin: 5px;
-            // padding: 10px;
             font-size: 16px;
-            // color: white; // Устанавливаем белый цвет текста по умолчанию
             &.small {
-                // font-size: 12px; // Задаем меньший размер шрифта для кнопок с одной цифрой
+
                 padding: 10px 14.4px;
             }
 
             &.green {
                 background-color: green;
-                color: black; // Устанавливаем черный цвет текста для зеленой кнопки
+                color: black; 
             }
 
             &.red {
                 background-color: red;
-                color: white; // Устанавливаем белый цвет текста для красной кнопки
+                color: white; 
             }
         }
-    // }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .container {
+        .containerBtn {
+            width: 320px;
+            .button {
+                width: 25px;
+                height: 25px;
+                border: none;
+                border-radius: 7px;
+                margin: 3px;
+                font-size: 10px;
+                &.small {
+                    padding: 10px 14.4px;
+                }
+
+                &.green {
+                    background-color: green;
+                    color: black; 
+                }
+
+                &.red {
+                    background-color: red;
+                    color: white; 
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .container {
+        .containerBtn {
+            width: 270px;
+            .button {
+                width: 20px;
+                height: 20px;
+                border: none;
+                border-radius: 7px;
+                margin: 3px;
+                padding: 5px;
+                font-size: 10px;
+           
+                &.small {
+                    padding: 5px 5px;
+                }
+
+                &.green {
+                    background-color: green;
+                    color: black; 
+                }
+
+                &.red {
+                    background-color: red;
+                    color: white; 
+                }
+            }
+        }
+    }
 }
