@@ -38,10 +38,10 @@ body {
             color: red;
             text-transform: uppercase;
             letter-spacing: 7px;
-            padding: 7px 0;
+            padding: 7px 10px;
             font-size: 20px;
             margin: 0;
-            outline: 1px solid red;
+            outline: 2px solid red;
             text-align: center;
         }
 
@@ -118,11 +118,13 @@ body {
 
         .secondItem {
             padding: 0;
-
+            margin: 0 45px;
             h2 {
                
-                border: 1px solid red;
-                letter-spacing: 5px;
+                // outline: 2px solid red;
+                border-left: 2px solid red;
+                border-right: 2px solid red;
+                letter-spacing: 3px;
                 padding: 7px 0px;
                
             }
