@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setIndexTimeFilm, setPlacesFilm, setCurrentTimeFilm } from "../../store/dataSlices"
+import {
+    setIndexTimeFilm,
+    setPlacesFilm,
+    setCurrentTimeFilm,
+} from "../../store/dataSlices"
 import styles from "./Film.module.scss"
 import { Link } from "react-router-dom"
 
@@ -8,24 +12,18 @@ function Film() {
     const dispatch = useDispatch()
 
     const clickOnTime = (item, event) => {
-        // определяю индекс времени
-
         dispatch(setCurrentTimeFilm(event.target.textContent))
 
         const indexTime = data.timeFilm.indexOf(item)
 
         dispatch(setIndexTimeFilm(indexTime))
 
-        // пробигаюсь по всем объектам с фильмами
         data.allFilms &&
             data.allFilms.map((item) => {
-                // если фильм в объекте совпадает с тем на который нажал пользователь
                 if (item.name === data.nameFilm) {
-                    // устанавливаем PlacesFilm - доступные места
                     dispatch(
                         setPlacesFilm(item.places[data.indexOfDate][indexTime])
                     )
-                
                 }
             })
     }

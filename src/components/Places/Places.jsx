@@ -18,7 +18,6 @@ function Places() {
 
     const [buttonClicked, setButtonClicked] = useState(false)
 
-    // Получаем все фильмы сервера
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -34,9 +33,8 @@ function Places() {
         fetchData()
     }, [buttonClicked])
 
-    // Проверяем наличие данных в allFilmsLocal
     if (!data.allFilms) {
-        return <div>Loading...</div> // Отображаем загрузку или другой индикатор ожидания
+        return <div>Loading...</div>
     }
 
     const clickOnPlace = async (event, keys, values, idFilm) => {
