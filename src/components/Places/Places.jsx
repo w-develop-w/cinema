@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import {
-    setAllFilms
-} from "../../store/dataSlices"
+import { setAllFilms } from "../../store/dataSlices"
 import styles from "./Places.module.scss"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -20,7 +18,7 @@ function Places() {
 
     const [buttonClicked, setButtonClicked] = useState(false)
 
-    // Получаем все фильмы сервера 
+    // Получаем все фильмы сервера
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -43,37 +41,37 @@ function Places() {
 
     const clickOnPlace = (event, keys, values, idFilm) => {
         // определяю число на кнопке
-        const textContentBtn = event.target.textContent
+        const textContentBtn = event.target.textContent;
         // опрелделяю индекс числа в массиве ключей
-        const indexBtn = keys.indexOf(textContentBtn)
-        // по данному индексу меняю значение на противоположное в массиве values
-        values[indexBtn] = !values[indexBtn]
-
+        const indexBtn = keys.indexOf(textContentBtn);
+      
+        const updatedValues = [...values];
+        updatedValues[indexBtn] = !updatedValues[indexBtn];
+      
         // objPlaces - объединенный объект из ключей и значений
         const objPlaces = keys.reduce((result, key, index) => {
-            result[key] = values[index]
-            return result
-        }, {})
-
+          result[key] = values[index];
+          return result;
+        }, {});
+      
         if (data.allFilms) {
-            data.allFilms.map((item) => {
-                // находим объект фильма который пользователь выбрал
-                if (item.id === idFilm) {
-                    let clickedItem = item
-                    // меняем в данном объекте фильма в places соответствующий объект на измененный объект
-                    clickedItem.places[Number(data.indexOfDate)][
-                        Number(data.indexTimeFilm)
-                    ] = objPlaces
-                    console.log(clickedItem)
-                    updateData(idFilm, clickedItem)
-                    setButtonClicked(!buttonClicked)
-                }
-            })
+          data.allFilms.map((item) => {
+            // находим объект фильма который пользователь выбрал
+            if (item.id === idFilm) {
+              let clickedItem = JSON.parse(JSON.stringify(item)); // Создаем глубокую копию объекта
+              // меняем в данном объекте фильма в places соответствующий объект на измененный объект
+              clickedItem.places[Number(data.indexOfDate)][Number(data.indexTimeFilm)] = objPlaces;
+      
+              updateData(idFilm, clickedItem);
+              setButtonClicked(true);
+            }
+          });
         }
-
+      
         // id фильма
-        // console.log(`idFilm: ${idFilm}`)
-    }
+        // console.log(`idFilm: ${idFilm}`);
+      };
+      
 
     return (
         <div className={styles.container}>
