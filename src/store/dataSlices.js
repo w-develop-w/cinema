@@ -1,4 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAction, createSlice } from "@reduxjs/toolkit"
+
+export const setAllFilms = createAction("dataOfFilms/setAllFilms")
+export const setImageFilm = createAction("dataOfFilms/setImageFilm")
+export const setNameFilm = createAction("dataOfFilms/setNameFilm")
+export const setDateFilm = createAction("dataOfFilms/setDateFilm")
+export const setTimeFilm = createAction("dataOfFilms/setTimeFilm")
+export const setCurrentTimeFilm = createAction("dataOfFilms/setCurrentTimeFilm")
+export const setPlacesFilm = createAction("dataOfFilms/setPlacesFilm")
+export const setIndexTimeFilm = createAction("dataOfFilms/setIndexTimeFilm")
+export const setIndexOfDate = createAction("dataOfFilms/setIndexOfDate")
+export const setIdOfDate = createAction("dataOfFilms/setIdOfDate")
+export const setClickOnPlaces = createAction("dataOfFilms/setClickOnPlaces")
 
 const dataOfFilmsSlice = createSlice({
     name: "dataOfFilms",
@@ -15,55 +27,43 @@ const dataOfFilmsSlice = createSlice({
         idOfDate: 0,
         clickOnPlaces: true,
     },
-    reducers: {
-        setAllFilms: (state, action) => {
-            state.allFilms = action.payload
-        },
-        setImageFilm: (state, action) => {
-            state.imageFilm = action.payload
-        },
-        setNameFilm: (state, action) => {
-            state.nameFilm = action.payload
-        },
-        setDateFilm: (state, action) => {
-            state.dateFilm = action.payload
-        },
-        setTimeFilm: (state, action) => {
-            state.timeFilm = action.payload
-        },
-        setCurrentTimeFilm: (state, action) => {
-            state.currentTimeFilm = action.payload
-        },
-        setPlacesFilm: (state, action) => {
-            state.placesFilm = action.payload
-        },
-        setIndexTimeFilm: (state, action) => {
-            state.indexTimeFilm = action.payload
-        },
-        setIndexOfDate: (state, action) => {
-            state.indexOfDate = action.payload
-        },
-        setIdOfDate: (state, action) => {
-            state.idOfDate = action.payload
-        },
-        setClickOnPlaces: (state, action) => {
-            state.clickOnPlaces = action.payload
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(setAllFilms, (state, action) => {
+                state.allFilms = action.payload
+            })
+            .addCase(setImageFilm, (state, action) => {
+                state.imageFilm = action.payload
+            })
+            .addCase(setNameFilm, (state, action) => {
+                state.nameFilm = action.payload
+            })
+            .addCase(setDateFilm, (state, action) => {
+                state.dateFilm = action.payload
+            })
+            .addCase(setTimeFilm, (state, action) => {
+                state.timeFilm = action.payload
+            })
+            .addCase(setCurrentTimeFilm, (state, action) => {
+                state.currentTimeFilm = action.payload
+            })
+            .addCase(setPlacesFilm, (state, action) => {
+                state.placesFilm = action.payload
+            })
+            .addCase(setIndexTimeFilm, (state, action) => {
+                state.indexTimeFilm = action.payload
+            })
+            .addCase(setIndexOfDate, (state, action) => {
+                state.indexOfDate = action.payload
+            })
+            .addCase(setIdOfDate, (state, action) => {
+                state.idOfDate = action.payload
+            })
+            .addCase(setClickOnPlaces, (state, action) => {
+                state.clickOnPlaces = action.payload
+            })
     },
 })
 
-export const {
-    setData,
-    setIndexOfDate,
-    setIdOfDate,
-    setImageFilm,
-    setNameFilm,
-    setDateFilm,
-    setTimeFilm,
-    setCurrentTimeFilm,
-    setIndexTimeFilm,
-    setPlacesFilm,
-    setAllFilms,
-    setClickOnPlaces,
-} = dataOfFilmsSlice.actions
 export default dataOfFilmsSlice.reducer

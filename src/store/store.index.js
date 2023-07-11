@@ -10,11 +10,21 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, dataOfFilmsReducer);
 
+// export const store = configureStore({
+//   reducer: {
+//     dataOfFilms: persistedReducer,
+//   },
+// });
+
 export const store = configureStore({
-  reducer: {
-    dataOfFilms: persistedReducer,
-  },
-});
+    reducer: {
+      dataOfFilms: persistedReducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }),
+  });
+  
 
 export const persistor = persistStore(store);
-
