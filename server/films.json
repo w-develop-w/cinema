@@ -660,7 +660,7 @@
     {
       "id": 4,
       "img": "img/flesh.jpg",
-      "name": "Flesh",
+      "name": "Flash",
       "dates": [
         "06.07.2023",
         "07.07.2023"
@@ -2192,8 +2192,8 @@
     },
     {
       "id": 11,
-      "img": "img/the-wolf-of-wall-street.jpg",
-      "name": "The wolf ...",
+      "img": "img/emancipation.jpg",
+      "name": "Emancipation",
       "dates": [
         "06.07.2023",
         "07.07.2023"

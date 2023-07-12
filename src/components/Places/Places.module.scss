@@ -30,6 +30,7 @@
 
                 &:hover {
                     background-color: rgb(2, 57, 2);
+                    cursor: pointer;
                 }
             }
 
@@ -39,6 +40,7 @@
                 transition: 0.3s;
 
                 &:hover {
+                    cursor: pointer;
                     background-color: rgb(96, 9, 9);
                 }
             }
